@@ -49,5 +49,23 @@ Traditional detection fails because:
    - Flags risks based on spread rate, wind interaction, and terrain  
 3. **Real-Time Decision Engine**  
    - Runs entirely on Raspberry Pi (no cloud dependency)  
-   - Triggers alerts if confidence exceeds 95%  
+   - Triggers alerts if confidence exceeds 95%
+
+# PYROWATCH: Hardware Requirements & Working Principle  
+
+---
+
+## 🖥️ Hardware Requirements  
+
+**Core Components**  
+- **Raspberry Pi 4B+** (4GB RAM minimum)  
+- **8MP+ Camera Module** (HQ Camera or Arducam recommended)  
+- **Power Supply**: 5V/3A USB-C with surge protection  
+- **Connectivity**:  
+  - Cellular modem (e.g., SIM7600 for remote areas)  
+- **Storage**: 8GB+ MicroSD Card (Class 10/UHS-1)  
+
+## 🔧 How It Works  
+
+
 
