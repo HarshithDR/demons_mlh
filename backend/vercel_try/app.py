@@ -54,7 +54,7 @@ def handle_data():
             return jsonify({"error": "Missing required fields"}), 400
 
         data['Time'] = get_current_cst_time()
-        data['timestamp'] = datetime.utcnow()  
+        # data['timestamp'] = datetime.utcnow()  
     
         inserted_id = collection.insert_one(data).inserted_id
 
