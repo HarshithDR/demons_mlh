@@ -156,16 +156,17 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             onPressed: () {
-                              // Handle sign in logic
-                              final username = _usernameController.text;
-                              final password = _passwordController.text;
-                              // Add your authentication logic here
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Farmhome(),
-                                ),
-                              );
+                              if (_usernameController.value.text == "admin" &&
+                                  _passwordController.value.text == "1234") {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Farmhome(),
+                                  ),
+                                );
+                              } else {
+                                return;
+                              }
                             },
                             child: const Text(
                               'SUBMIT',

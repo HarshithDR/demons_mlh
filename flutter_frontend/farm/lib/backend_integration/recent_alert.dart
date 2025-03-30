@@ -1,63 +1,124 @@
 import 'dart:convert';
+import 'dart:async'; // For Timer
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_background/animated_background.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:audioplayers/audioplayers.dart'; // For sound notification
 
 class JsonTableScreen extends StatefulWidget {
+  const JsonTableScreen({super.key});
+
   @override
   _JsonTableScreenState createState() => _JsonTableScreenState();
 }
 
 class _JsonTableScreenState extends State<JsonTableScreen>
     with SingleTickerProviderStateMixin {
-  Map<String, dynamic> data = {}; // Change to hold a Map
+  Map<String, dynamic> data = {};
   bool isLoading = false;
+  Timer? _timer;
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
 
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) fetchData(); // Initial fetch when screen loads
+    _startAutoFetch(); // Start fetching immediately and every 2 seconds
+  }
+
+  // Start fetching data every 2 seconds
+  void _startAutoFetch() {
+    _timer = Timer.periodic(Duration(seconds: 2), (Timer t) {
+      fetchData();
+    });
+  }
+
+  // Fetch data from the API
   Future<void> fetchData() async {
     setState(() => isLoading = true);
 
-    final response = await http.get(
-      Uri.parse(
-        'https://vercel-zz1tl98to-nishchals-projects-80d9f9a5.vercel.app/api/check-fire',
-      ),
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(
+          'https://vercel-zz1tl98to-nishchals-projects-80d9f9a5.vercel.app/api/check-fire',
+        ),
+      );
 
-    if (response.statusCode == 200) {
-      setState(() {
-        data = json.decode(response.body);
-        isLoading = false;
-      });
-    } else {
+      if (response.statusCode == 200) {
+        setState(() {
+          data = json.decode(response.body);
+          isLoading = false;
+        });
+
+        // Check if fire is detected and play sound if true
+        String fireDetected = data["details"]["Fire_Detected"] ?? "No";
+        if (fireDetected.toLowerCase() == "yes") {
+          _playFireSound();
+        }
+      } else {
+        setState(() => isLoading = false);
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
       setState(() => isLoading = false);
-      throw Exception('Failed to load data');
+      print('Error fetching data: $e');
+    }
+  }
+
+  // Play the fire sound if fire is detected
+  void _playFireSound() async {
+    // Assuming 'fire.mp3' is in your assets folder
+    await _audioPlayer.play(AssetSource('images/fire.mp3'));
+  }
+
+  void openGoogleMaps(String gps) async {
+    List<String> coordinates = gps.split(",");
+    if (coordinates.length == 2) {
+      String latitude = coordinates[0].trim();
+      String longitude = coordinates[1].trim();
+      final Uri url = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude',
+      );
+
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        print('Could not launch Google Maps');
+      }
     }
   }
 
   @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the screen is disposed
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    const glowColor = Color.fromARGB(255, 235, 89, 10);
     return Scaffold(
       backgroundColor: Color.fromRGBO(10, 25, 41, 0.5),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: const Color.fromARGB(255, 255, 55, 0)),
+        leading: IconButton(
+          onPressed: () {
+            _audioPlayer.pause();
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 55, 0)),
+        ),
         title: Text(
           'Smart Farm',
           style: GoogleFonts.abrilFatface(
-            color: const Color.fromARGB(255, 255, 55, 0),
+            color: Color.fromARGB(255, 255, 55, 0),
           ),
         ),
         centerTitle: true,
-        // leading: Image.asset('assets/images/logo.png'),
         backgroundColor: Color.fromRGBO(9, 23, 37, 0.345),
-        shadowColor: Colors.black,
         elevation: 6,
       ),
       body: Stack(
         children: [
           AnimatedBackground(
-            child: Text(''),
             vsync: this,
             behaviour: RandomParticleBehaviour(
               options: ParticleOptions(
@@ -67,56 +128,33 @@ class _JsonTableScreenState extends State<JsonTableScreen>
                 spawnMinSpeed: 15,
               ),
             ),
+            child: Container(),
           ),
-          Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height / 20),
-              Center(
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 12,
-                  width: MediaQuery.of(context).size.height / 4,
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: glowColor.withOpacity(0.7),
-                        blurRadius: 15,
-                        spreadRadius: 2,
-                      ),
-                    ],
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: fetchData,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 50,
-                        vertical: 16,
-                      ),
-                      side: BorderSide(color: glowColor, width: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    onPressed: () {
-                      fetchData();
-                    },
-                    child: const Text(
-                      'Fetch Data',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                  child: Text(
+                    'Fetch Data',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
-              ),
-              SizedBox(height: screenSize.height / 20),
-              isLoading
-                  ? CircularProgressIndicator(color: Colors.deepOrange[600])
-                  : Expanded(child: buildTable()),
-            ],
+                SizedBox(height: 20),
+                if (isLoading)
+                  CircularProgressIndicator(color: Colors.deepOrange)
+                else
+                  buildTable(),
+              ],
+            ),
           ),
         ],
       ),
@@ -124,12 +162,15 @@ class _JsonTableScreenState extends State<JsonTableScreen>
   }
 
   Widget buildTable() {
-    if (data.isEmpty)
+    if (data.isEmpty) {
       return Text('No data available', style: TextStyle(color: Colors.white));
+    }
 
     // Extract data
-    String alert = data["alert"];
-    Map<String, dynamic> details = data["details"];
+    String alert = data["alert"] ?? "No Alert";
+    Map<String, dynamic> details = data["details"] ?? {};
+    String fireDetected = details["Fire_Detected"] ?? "No";
+    String gps = details["GPS"] ?? "0,0";
 
     return SingleChildScrollView(
       child: Container(
@@ -174,6 +215,23 @@ class _JsonTableScreenState extends State<JsonTableScreen>
                     );
                   }).toList(),
             ),
+            SizedBox(height: 15),
+            // Show the Map button only if fire is detected
+            if (fireDetected.toLowerCase() == "yes")
+              ElevatedButton(
+                onPressed: () => openGoogleMaps(gps),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'View Map',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
           ],
         ),
       ),

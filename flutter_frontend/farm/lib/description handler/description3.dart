@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Description3 extends StatefulWidget {
   final PageController pController;
-  Description3({required this.pController});
+  const Description3({super.key, required this.pController});
 
   @override
   State<Description3> createState() => _Description3State();
@@ -16,6 +16,7 @@ class _Description3State extends State<Description3> {
   bool opac1 = true;
   bool opac2 = true;
   bool opac3 = true;
+  @override
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 500), () {
@@ -43,7 +44,7 @@ class _Description3State extends State<Description3> {
       extendBodyBehindAppBar: false,
       appBar: AppBar(
         title: Text(
-          'Smart Farm',
+          'PyroWatch',
           style: GoogleFonts.abrilFatface(
             color: const Color.fromARGB(255, 255, 55, 0),
           ),

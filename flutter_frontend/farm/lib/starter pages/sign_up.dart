@@ -1,4 +1,4 @@
-import 'package:farm/farmHome.dart';
+import 'package:farm/starter%20pages/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -159,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Farmhome(),
+                                  builder: (context) => SignInPage(),
                                 ),
                               );
                             },

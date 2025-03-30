@@ -4,16 +4,18 @@ import 'package:farm/description%20handler/description3.dart';
 import 'package:flutter/material.dart';
 
 class Pageviewer extends StatelessWidget {
+  const Pageviewer({super.key});
+
   @override
   Widget build(BuildContext context) {
-    PageController _pcontroller = new PageController();
+    PageController pcontroller = PageController();
     return PageView(
       children: [
-        Description1(pController: _pcontroller),
-        Description2(pController: _pcontroller),
-        Description3(pController: _pcontroller),
+        Description1(pController: pcontroller),
+        Description2(pController: pcontroller),
+        Description3(pController: pcontroller),
       ],
-      controller: _pcontroller,
+      controller: pcontroller,
       physics: NeverScrollableScrollPhysics(),
     );
   }

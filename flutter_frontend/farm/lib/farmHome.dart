@@ -8,20 +8,24 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'backend_integration/recent_alert.dart';
 
 class Farmhome extends StatefulWidget {
+  const Farmhome({super.key});
+
   @override
   State<Farmhome> createState() => _FarmhomeState();
 }
 
 class _FarmhomeState extends State<Farmhome>
     with SingleTickerProviderStateMixin {
+  @override
   void initState() {
     super.initState();
   }
 
-  Widget textfielder(String helperText) {
+  Widget textfielder(String helperText, TextEditingController control) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        controller: control,
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
           helperText: helperText,
@@ -33,16 +37,19 @@ class _FarmhomeState extends State<Farmhome>
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller1 = TextEditingController();
+    bool isToggled = false;
     final screenSize = MediaQuery.of(context).size;
     const glowColor = Color.fromARGB(255, 235, 89, 10);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Smart Farm',
+          'PyroWatch',
           style: GoogleFonts.abrilFatface(
             color: const Color.fromARGB(255, 255, 55, 0),
           ),
         ),
+
         centerTitle: true,
         // leading: Image.asset('assets/images/logo.png'),
         backgroundColor: Color.fromRGBO(9, 23, 37, 0.345),
@@ -55,7 +62,6 @@ class _FarmhomeState extends State<Farmhome>
       body: Stack(
         children: [
           AnimatedBackground(
-            child: Text(''),
             vsync: this,
             behaviour: RandomParticleBehaviour(
               options: ParticleOptions(
@@ -65,6 +71,7 @@ class _FarmhomeState extends State<Farmhome>
                 spawnMaxSpeed: 20,
               ),
             ),
+            child: Text(''),
           ),
 
           ListView(
@@ -77,21 +84,11 @@ class _FarmhomeState extends State<Farmhome>
                     AnimatedTextKit(
                       animatedTexts: [
                         TyperAnimatedText(
-                          'HI CLAUDIA',
+                          'HI ADMIN',
                           textStyle: TextStyle(
                             fontSize: 50.0, // Bigger font size
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 25.0,
-                                color: Colors.deepOrange,
-                              ),
-                              Shadow(
-                                blurRadius: 50.0,
-                                color: Colors.deepOrange,
-                              ),
-                            ],
+                            color: Colors.deepOrange,
                           ),
                           speed: Duration(milliseconds: 100),
                         ),
@@ -216,7 +213,10 @@ class _FarmhomeState extends State<Farmhome>
                                                   scale: 1.5,
                                                 ),
 
-                                                textfielder("Device ID"),
+                                                textfielder(
+                                                  "Device ID",
+                                                  controller1,
+                                                ),
                                                 SizedBox(
                                                   height:
                                                       MediaQuery.of(
@@ -263,7 +263,29 @@ class _FarmhomeState extends State<Farmhome>
                                                             ),
                                                       ),
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                        context,
+                                                      ).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Your device is now registered',
+                                                          ),
+                                                          duration: Duration(
+                                                            seconds: 3,
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors.blue[900],
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  20,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
                                                     child: const Text(
                                                       'Save',
                                                       style: TextStyle(
@@ -336,7 +358,7 @@ class _FarmhomeState extends State<Farmhome>
                           );
                         },
                         child: const Text(
-                          'Recent Alerts',
+                          'Current Alerts',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
