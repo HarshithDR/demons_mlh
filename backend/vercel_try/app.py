@@ -33,7 +33,7 @@ def home():
         <li><a href="/api/check-fire">/api/check-fire</a> - Check latest entry for fire detection (GET)</li>
     </ul>
     """
-
+# https://vercel-zz1tl98to-nishchals-projects-80d9f9a5.vercel.app/api/get-all-entries
 @app.route('/api/get-all-entries', methods=['GET'])
 def get_all_entries():
     try:
