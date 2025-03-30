@@ -5,6 +5,13 @@ import os
 from datetime import datetime
 import pytz 
 from flask_cors import CORS  
+from werkzeug.utils import secure_filename
+# import numpy as np
+# from tensorflow.keras.models import load_model
+# from tensorflow.keras.preprocessing import image
+import os
+from gradio_client import Client, handle_file
+
 
 load_dotenv()
 
@@ -93,6 +100,29 @@ def check_fire():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+gradio_client = Client("https://88f6fc47f3c520b45f.gradio.live/")
+
+
+@app.route('/api/gradio-prediction', methods=['GET'])
+def get_gradio_prediction():
+    try:
+        # You can make this URL configurable via query parameters if needed
+        image_url = request.args.get('image_url', 'https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png')
+        
+        result = gradio_client.predict(
+            input_image=handle_file(image_url),
+            api_name="/predict"
+        )
+        
+        return jsonify({
+            "prediction": result,
+            "image_url": image_url,
+            "timestamp": get_current_cst_time()
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 def vercel_handler(request):
     from flask import Response
     with app.app_context():
@@ -102,6 +132,9 @@ def vercel_handler(request):
             status=response.status_code,
             headers=dict(response.headers)
         )
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)

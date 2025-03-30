@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": {
+        "pythonVersion": "3.9",
+        "installCommand": "pip install -r requirements.txt",
+        "maxLambdaSize": "15mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "app.py",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": "true",
+        "X-Custom-Header": "Forest-API"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "app.py",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    }
+  ],
+  "env": {
+    "FLASK_ENV": "production"
+  }
+}

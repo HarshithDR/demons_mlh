@@ -1,0 +1,6 @@
+flask==2.3.2
+pymongo==4.3.3
+python-dotenv==1.0.0
+pytz==2023.3
+flask-cors==3.0.10
+gradio_client==0.6.1
