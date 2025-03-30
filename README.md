@@ -47,10 +47,6 @@ Wildfires in remote regions often go undetected until they escalate. Traditional
   - Incident history dashboard.  
   - Premium tier: Custom reporting, multi-device management.  
 
-### **4. Third-Party Services**  
-- **Notifications**: Firebase Cloud Messaging (FCM), Twilio (SMS).  
-- **Geolocation**: Mapbox/Google Maps API.  
-- **Emergency Alerts**: Integration with local fire department APIs.  
-- **Payments**: Stripe for premium subscriptions.
+
   
 
