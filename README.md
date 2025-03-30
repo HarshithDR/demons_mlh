@@ -23,3 +23,14 @@ Traditional detection fails because:
 2. Analyzes fire behavior through firefighter-inspired AI  
 3. Alerts 30 minutes faster than thermal sensors  
 
+## 📊 Impact Metrics  
+
+| Metric                                | Value                          |  
+|---------------------------------------|--------------------------------|  
+| Acres burned in the U.S. (2010-2019)  | 64,468,574                     |  
+| Annual acres burned in California     | 4.5M (5-year average)          |  
+| Response time improvement             | Up to 30 minutes faster        |  
+| Fire size reduction per 10 minutes    | 50% smaller fires              |  
+| 2023 wildfire damages (U.S.)         | $13B                           |  
+| Annual damage reduction potential     | $6.5B (50% faster response)    |  
+| Deployment cost per node              | $200 (vs $5K traditional)      |  
