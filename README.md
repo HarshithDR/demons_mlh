@@ -53,13 +53,4 @@ Wildfires in remote regions often go undetected until they escalate. Traditional
 - **Emergency Alerts**: Integration with local fire department APIs.  
 - **Payments**: Stripe for premium subscriptions.
   
-# 📱 App Overview
-
-The **FireWatch Pro** mobile app allows users to:
-
-- **Register/login** to their account.
-- **Pair hardware devices** (sensors) via QR codes or device IDs.
-- **Receive real-time fire alerts** with GPS coordinates.
-- **View historical incidents** and manage devices.
-- Access **premium features** (custom dashboards, API integrations).
 
