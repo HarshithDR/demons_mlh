@@ -22,7 +22,7 @@ class _FarmSplashScreenState extends State<FarmSplashScreen> {
         opac1 = true;
       });
     });
-    Future.delayed(Duration(milliseconds: 2900), () {
+    Future.delayed(Duration(milliseconds: 3100), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Pageviewer()),
@@ -37,10 +37,7 @@ class _FarmSplashScreenState extends State<FarmSplashScreen> {
         child: AnimatedOpacity(
           opacity: opac1 ? 0 : 1,
           duration: Duration(milliseconds: 1000),
-          child: Text(
-            'Smart Farm',
-            style: GoogleFonts.abel(color: Colors.white),
-          ),
+          child: Image.asset('assets/images/logo.png', scale: 3),
         ),
       ),
       backgroundColor: Colors.black,
