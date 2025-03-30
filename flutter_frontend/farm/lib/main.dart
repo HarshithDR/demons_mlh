@@ -7,6 +7,9 @@ void main() => runApp(MyFarm());
 class MyFarm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Farmhome(), debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      home: FarmSplashScreen(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
