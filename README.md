@@ -34,3 +34,20 @@ Traditional detection fails because:
 | 2023 wildfire damages (U.S.)         | $13B                           |  
 | Annual damage reduction potential     | $6.5B (50% faster response)    |  
 | Deployment cost per node              | $200 (vs $5K traditional)      |  
+
+
+## 👁️ How PYROWATCH Works  
+
+**Core Technology**: $200 Raspberry Pi + Camera-Native AI  
+
+### 🔍 Detection Workflow  
+1. **Quantum-Level Visual Analysis**  
+   - Processes pixel-level data from standard cameras  
+   - Identifies smoke patterns invisible to traditional systems  
+2. **Firefighter-Inspired AI**  
+   - Vision-Language Model (VLM) interprets fire behavior contextually  
+   - Flags risks based on spread rate, wind interaction, and terrain  
+3. **Real-Time Decision Engine**  
+   - Runs entirely on Raspberry Pi (no cloud dependency)  
+   - Triggers alerts if confidence exceeds 95%  
+
