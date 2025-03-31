@@ -51,7 +51,7 @@ Wildfires in remote regions often go undetected until they escalate. Traditional
 
 ## 📋 Conclusion  
 
-**FireWatch Pro** is more than just a wildfire detection system; it's a proactive step toward safeguarding lives, property, and the environment. By integrating cutting-edge IoT hardware, robust cloud infrastructure, and an intuitive mobile app, FireWatch Pro empowers individuals and organizations to respond to wildfires before they become uncontrollable. Its scalability and premium features ensure that both small landowners and large-scale operations can benefit from this life-saving technology. Together, we can mitigate the devastating impact of wildfires and build a safer, more resilient future.
+**PyroWatch** is more than just a wildfire detection system; it's a proactive step toward safeguarding lives, property, and the environment. By integrating cutting-edge IoT hardware, robust cloud infrastructure, and an intuitive mobile app, FireWatch Pro empowers individuals and organizations to respond to wildfires before they become uncontrollable. Its scalability and premium features ensure that both small landowners and large-scale operations can benefit from this life-saving technology. Together, we can mitigate the devastating impact of wildfires and build a safer, more resilient future.
 
   
 
