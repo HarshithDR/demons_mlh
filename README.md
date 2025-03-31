@@ -1,4 +1,4 @@
-# FireWatch 🔥  
+# PyroWatch 🔥  
 **Early Wildfire Detection & Alert System**  
 
 ---
