@@ -1,4 +1,4 @@
-# FireWatch Pro 🔥  
+# FireWatch 🔥  
 **Early Wildfire Detection & Alert System**  
 
 ---
